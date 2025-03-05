@@ -7,6 +7,8 @@ import type {
 export interface AccountDetail {
 	balance: InvestecAccountBalance;
 	transactions: InvestecTransaction[];
+	income: number;
+	expenses: number;
 	transactionsAnalysis: TransactionsAnalysis;
 }
 

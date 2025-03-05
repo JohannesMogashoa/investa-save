@@ -44,9 +44,20 @@ export default defineEventHandler(async (event) => {
 		{} as Record<string, { count: number; totalAmount: number }>
 	);
 
+	// please build an analysis of the transactions between income & expenses
+	const income = transactions
+		.filter((transaction) => transaction.type === "CREDIT")
+		.reduce((acc, transaction) => acc + transaction.amount, 0);
+
+	const expenses = transactions
+		.filter((transaction) => transaction.type === "DEBIT")
+		.reduce((acc, transaction) => acc + transaction.amount, 0);
+
 	return {
 		balance,
 		transactions,
+		income,
+		expenses,
 		transactionsAnalysis,
 	};
 });
