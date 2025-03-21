@@ -1,6 +1,9 @@
 <template>
     <h1 class="h-6 text-3xl font-bold mb-6">My Accounts</h1>
 
+    <UProgress class="mb-4" color="primary" size="sm" v-if="isLoading" />
+    <div class="h-5" v-if="!isLoading" />
+
     <div class="grid grid-cols-2 gap-3">
         <template v-for="account in accounts" :key="account.accountId" @click="selectAccount(account)">
             <div @click="() => selectAccount(account.accountId)">
@@ -19,7 +22,7 @@
     </div>
 
     <div class="h-5" />
-    <UProgress color="primary" size="sm" v-if="isLoading" />
+
 
     <template v-if="selectedAccount">
         <div>
@@ -58,7 +61,7 @@
             </div>
             <ul class="grid grid-cols-3 gap-3">
                 <UCard v-for="(analysis, type) in selectedAccount.transactionsAnalysis" :key="type">
-                    <p class="text-xl">{{ type }}</p>
+                    <p class="text-xl">{{ splitByCapitalLetter(type as string) }}</p>
                     <p class="text-sm text-white/30"><span class="font-bold">Total Transactions:</span> {{
                         analysis.count }}</p>
                     <p class="text-sm text-white/30"><span class="font-bold">Total Amount: </span>{{
@@ -99,11 +102,4 @@ const selectAccount = async (accountId: string) => {
     isLoading.value = false;
 };
 
-//format amount to currency
-const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'ZAR'
-    }).format(amount)
-}
 </script>
